@@ -51,6 +51,9 @@ class ViewController: UIViewController {
     
         // Setting timer Label initial values
         timerLabel.text = "00:00:00"
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     
@@ -141,6 +144,12 @@ class ViewController: UIViewController {
         }
         // Sending the values to the timer label
         timerLabel.text = "\(hourString):\(minuteString):\(secondString)"
+    }
+    
+    @objc func appMovedToBackground() {
+        gameTimer?.invalidate()
+        startButton.isEnabled = true
+        startButton.alpha = 1
     }
 }
 
